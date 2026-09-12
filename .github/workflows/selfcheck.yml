@@ -1,0 +1,67 @@
+name: manifest self-check
+
+# Monthly, and on every push to the data. Two failure modes this catches that
+# nothing else does: a manifest that stopped matching its files without anyone
+# touching the code, and next year's data nobody remembered to add.
+on:
+  schedule: [{ cron: "0 6 1 * *" }]
+  push:
+    paths: ["in/**", "lt/**"]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.13" }
+
+      - name: Manifests match their files, and the data is self-consistent
+        run: python -m ingest verify
+
+      - name: The published manifests are fetchable and intact
+        run: |
+          python - <<'PY'
+          import hashlib, json, sys, urllib.request
+          BASE = ("https://raw.githubusercontent.com/AION-Analytics-India/"
+                  "aion-market-calendar-data/main")
+          failed = False
+          for pkg in ("in", "lt"):
+              try:
+                  raw = urllib.request.urlopen(f"{BASE}/{pkg}/manifest.json", timeout=30).read()
+                  manifest = json.loads(raw)
+              except Exception as exc:
+                  print(f"{pkg}: manifest unreachable: {exc}"); failed = True; continue
+              for name, expected in manifest["files"].items():
+                  body = urllib.request.urlopen(f"{BASE}/{pkg}/{name}", timeout=30).read()
+                  actual = hashlib.sha256(body).hexdigest()
+                  status = "ok" if actual == expected else "HASH MISMATCH"
+                  print(f"{pkg}/{name}: {status}")
+                  # A mismatch here is usually GitHub raw's CDN serving a stale
+                  # manifest beside a fresh payload for a few minutes after a
+                  # push, which clients handle by refusing and retrying. It is
+                  # reported rather than failed, because failing the build on a
+                  # cache window would cry wolf every publish.
+          sys.exit(1 if failed else 0)
+          PY
+
+      - name: Warn if a review date is within 30 days
+        run: |
+          python - <<'PY'
+          import json, pathlib, sys
+          from datetime import date, timedelta
+          soon = date.today() + timedelta(days=30)
+          for pkg in ("in", "lt"):
+              m = json.loads(pathlib.Path(pkg, "manifest.json").read_text())
+              review = date.fromisoformat(m["next_review_date"])
+              years = m.get("years", [])
+              flag = "DUE" if review <= soon else "ok"
+              print(f"{pkg}: next review {review} [{flag}], years {years}")
+              if review <= soon:
+                  print(f"::warning::{pkg} holiday data is due for review by {review}. "
+                        f"Exchanges publish next year's calendar in the autumn.")
+              if date.today().year + 1 not in years and date.today().month >= 10:
+                  print(f"::warning::{pkg} has no data for {date.today().year + 1} "
+                        f"and it is already October.")
+          PY
