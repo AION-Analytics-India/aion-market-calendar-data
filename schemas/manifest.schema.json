@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/AION-Analytics-India/aion-market-calendar-data/main/schemas/manifest.schema.json",
+  "title": "AION market calendar data manifest",
+  "description": "Identical for every package. This is what makes one ingestion tool able to maintain all of them: the manifest is the contract, the payload beneath it is not.",
+  "type": "object",
+  "required": ["schema_version", "dataset_version", "last_updated", "files", "years"],
+  "additionalProperties": true,
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "description": "Bumped only for a breaking change to this manifest format. A client that does not recognise the value must refuse the data rather than guess.",
+      "const": 1
+    },
+    "dataset_version": {
+      "type": "string",
+      "description": "ISO-like and monotonic, e.g. 2026.09.12. Compared as a string, so the format must sort correctly; a semver-style value would not.",
+      "pattern": "^[0-9]{4}\\.[0-9]{2}\\.[0-9]{2}(\\.[0-9]+)?$"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "UTC, ISO 8601. A client fetches only if the remote value is greater than its own."
+    },
+    "next_review_date": {
+      "type": "string",
+      "format": "date",
+      "description": "When a human should refresh the upcoming year. Exchanges publish next year's calendar in the autumn, so this lands before then. A reminder, not an expiry."
+    },
+    "years": {
+      "type": "array",
+      "items": { "type": "integer" },
+      "description": "Years for which payload files exist. A date outside these has no data, and the client must answer 'not a holiday' rather than invent one."
+    },
+    "files": {
+      "type": "object",
+      "description": "Filename to SHA-256 of its bytes. EVERY file must verify before ANY is adopted. This is the guard whose absence caused the 2026-06-26 incident, when a 105-byte delta overwrote a 117 KB taxonomy.",
+      "additionalProperties": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+      "minProperties": 1
+    },
+    "source": { "type": "string", "format": "uri" },
+    "note": { "type": "string" }
+  }
+}

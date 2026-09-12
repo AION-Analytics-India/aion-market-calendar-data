@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Lithuanian holiday payload",
+  "description": "Date lists. Lithuanian PUBLIC holidays are computed by the library from the rule and need no data at all; this file carries only what cannot be derived -- exchange closures and half-days, which are announced.",
+  "type": "object",
+  "required": ["year", "timezone", "exchange_holidays"],
+  "properties": {
+    "year": { "type": "integer" },
+    "timezone": { "type": "string", "const": "Europe/Vilnius" },
+    "public_holidays": {
+      "type": "array",
+      "items": { "type": "string", "format": "date" },
+      "description": "For cross-checking the computed rule only. The rule remains the authority, because a rule cannot go stale."
+    },
+    "exchange_holidays": { "type": "array", "items": { "type": "string", "format": "date" } },
+    "exchange_holidays_by_venue": {
+      "type": "object",
+      "description": "AUTHORITATIVE where present. A date added only to the global list has no effect for a venue that has its own -- the easiest mistake to make here, and what `ingest verify` checks for.",
+      "additionalProperties": { "type": "array", "items": { "type": "string", "format": "date" } }
+    },
+    "half_days": {
+      "type": "object",
+      "description": "Date to early-close time, HH:MM local. A full closure cannot also be a half-day.",
+      "additionalProperties": { "type": "string", "pattern": "^[0-9]{2}:[0-9]{2}$" }
+    },
+    "half_days_by_venue": { "type": "object" },
+    "verified_on": { "type": "string", "format": "date" },
+    "changes": { "type": "array", "items": { "type": "object" } }
+  }
+}

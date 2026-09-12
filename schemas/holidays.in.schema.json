@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Indian market event payload",
+  "description": "Richer than the Lithuanian one, and deliberately not unified with it. Indian entries carry a policy, an impact level and a time range because callers act on them; flattening that into date lists would lose information users already depend on. The MANIFEST is what is shared -- that is what lets one tool maintain both.",
+  "type": "object",
+  "required": ["timezone", "version", "events"],
+  "properties": {
+    "timezone": { "type": "string", "const": "Asia/Kolkata" },
+    "version": { "type": "string" },
+    "range": {
+      "type": "object",
+      "description": "The span actually covered. Dates outside it have no records, and the library must say so rather than imply a closure.",
+      "properties": {
+        "start": { "type": "string", "format": "date" },
+        "end": { "type": "string", "format": "date" },
+        "note": { "type": "string" }
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "applies_to", "start", "end"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "category": { "type": "string" },
+          "impact": { "type": "string" },
+          "applies_to": { "type": "array", "items": { "type": "string" } },
+          "start": { "type": "string", "format": "date-time" },
+          "end": { "type": "string", "format": "date-time" },
+          "policy": { "type": "object" }
+        }
+      }
+    },
+    "market_sessions": { "type": "object" },
+    "market_timings": { "type": "object" },
+    "sources": { "type": "array" }
+  }
+}
