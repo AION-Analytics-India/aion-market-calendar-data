@@ -1,6 +1,6 @@
 {
   "timezone": "Asia/Kolkata",
-  "version": "v9_20261018_cas_revision",
+  "version": "v10_20261102_mcx_winter_close",
   "range": {
     "start": "2026-01-01",
     "end": "2026-12-25",
@@ -116,7 +116,7 @@
         {
           "market": "NSE_COMMODITY_DERIVATIVES",
           "open": "17:00:00",
-          "close": "23:30:00"
+          "close": "23:55:00"
         }
       ],
       "policy": {
@@ -548,7 +548,7 @@
         {
           "market": "MCX",
           "open": "17:00:00",
-          "close": "23:30:00"
+          "close": "23:55:00"
         }
       ]
     },
@@ -587,7 +587,7 @@
         {
           "market": "NSE_COMMODITY_DERIVATIVES",
           "open": "17:00:00",
-          "close": "23:30:00"
+          "close": "23:55:00"
         }
       ],
       "policy": {
@@ -3047,7 +3047,7 @@
         {
           "market": "MCX",
           "open": "17:00:00",
-          "close": "23:30:00"
+          "close": "23:55:00"
         }
       ]
     },
@@ -3086,7 +3086,7 @@
         {
           "market": "NSE_COMMODITY_DERIVATIVES",
           "open": "17:00:00",
-          "close": "23:30:00"
+          "close": "23:55:00"
         }
       ],
       "policy": {
@@ -3226,7 +3226,7 @@
         {
           "market": "MCX",
           "open": "17:00:00",
-          "close": "23:30:00"
+          "close": "23:55:00"
         }
       ]
     },
@@ -3265,7 +3265,7 @@
         {
           "market": "NSE_COMMODITY_DERIVATIVES",
           "open": "17:00:00",
-          "close": "23:30:00"
+          "close": "23:55:00"
         }
       ],
       "policy": {
@@ -4143,7 +4143,9 @@
     "muhurat_2026_note": "Muhurat Trading on Sunday 2026-11-08 is confirmed by NSE circular NSE/FAOP/71777 (2025-12-12); its timings 'shall be notified subsequently'. Checked 2026-10-18: not yet notified, so the bundled 18:15-19:15 stays marked provisional.",
     "nse_cas_revision_circular": "https://nsearchives.nseindia.com/content/circulars/CMTR76963.zip (NSE/CMTR/76963 dated 2026-10-16, forwards the SEBI circular of 2026-10-15)",
     "nse_commodity_winter_hours": "https://nsearchives.nseindia.com/content/circulars/COM76446.pdf",
-    "clearing_holiday_20260826_note": "2026-08-26 (Id-E-Milad) is a clearing holiday: equity cash and equity derivatives trade; currency, interest rate derivatives and corporate bonds are closed (NCL/MFSS/75777 dated 2026-08-17 and the NSE 2026 holiday list). Checked 2026-10-18."
+    "clearing_holiday_20260826_note": "2026-08-26 (Id-E-Milad) is a clearing holiday: equity cash and equity derivatives trade; currency, interest rate derivatives and corporate bonds are closed (NCL/MFSS/75777 dated 2026-08-17 and the NSE 2026 holiday list). Checked 2026-10-18.",
+    "mcx_winter_close_circular": "https://www.mcxindia.com/docs/default-source/circulars/english/2026/september/circular-550--2026.pdf",
+    "nse_commodity_partial_holiday_circular": "https://nsearchives.nseindia.com/content/circulars/COM71784.pdf"
   },
   "session_rules": {
     "NSE_COMMODITY_DERIVATIVES": [
@@ -4313,6 +4315,29 @@
         "effective_to": null,
         "reason": "Index and stock derivatives trade until 15:45 (SEBI 2026-10-15, paras 4.2.4 and 4.2.5); expiring index contracts stop at 15:30 on their expiry day.",
         "source": "SEBI HO/47/11/11(3)2025-MRD-POD2/I/23843/2026 dated 2026-10-15, para 4.2 (CAS), effective 2026-12-07"
+      }
+    ],
+    "MCX": [
+      {
+        "market": "MCX",
+        "segments": [
+          {
+            "market": "MCX",
+            "open": "08:45:00",
+            "close": "08:59:00",
+            "kind": "continuous"
+          },
+          {
+            "market": "MCX",
+            "open": "09:00:00",
+            "close": "23:55:00",
+            "kind": "continuous"
+          }
+        ],
+        "effective_from": "2026-11-02",
+        "effective_to": "2027-03-12",
+        "reason": "Non-agri commodities trade to 23:55 while US daylight saving is off.",
+        "source": "MCX/TRD/550/2026 dated 2026-09-29, effective 2026-11-02 to 2027-03-12"
       }
     ]
   }
