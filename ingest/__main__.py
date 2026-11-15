@@ -3,10 +3,8 @@
 
     python -m ingest verify
     python -m ingest show       --package lt --year 2026
-    python -m ingest add-holiday --package lt --date 2026-11-17 --type exchange \
-        --reason "Day of national mourning (Seimas resolution XIV-1234)"
-    python -m ingest add-half-day --package lt --date 2026-12-31 --close 12:30 \
-        --reason "Nasdaq Baltic early close"
+    python -m ingest add-holiday --help
+    python -m ingest add-half-day --help
     python -m ingest publish
 
 Works on both packages because the *manifest* is shared. The payloads are not,

@@ -23,10 +23,7 @@ So the data lives here, and the libraries refresh from it at most once a day.
 
 ## Why one repository for both
 
-The manifest schema is identical across packages, which is what lets a single
-ingestion tool maintain all of them. Two repositories would have meant two tools
-that drift apart, which is how the Lithuanian and Indian packages ended up with
-different update mechanisms in the first place — one of them broken.
+A shared manifest describes country-specific files and checksums. A common maintenance tool verifies both countries without treating their market rules as interchangeable.
 
 ## Why the payloads are *not* identical
 
@@ -45,18 +42,9 @@ business.** [`schemas/`](schemas/) holds all three.
 
 ## Integrity
 
-`manifest.json` lists a SHA-256 for every file beside it. A client downloads to a
-staging directory, verifies **every** hash, and only then swaps the files into
-place atomically. A single mismatch means nothing is adopted.
+Each country manifest lists SHA-256 digests. These detect changed or incomplete payloads; **the data manifests are not digitally signed**. Authenticity depends on the authenticated distribution source, repository access and review. A healthy hash does not establish exchange correctness. The separate experimental software updater uses signed offers and a separate trust policy.
 
-This is not ceremony. On 2026-06-26 a refresh without hash verification wrote a
-105-byte delta over a 117 KB taxonomy file and wiped a production sector engine.
-The guard added at the time checked a size floor and some required keys, which
-stops that exact payload and nothing else. A hash stops all of them.
-
-**`manifest.json` is never edited by hand.** Its purpose is to prove the payload
-files are the ones the maintainer intended, and a hash typed by a person proves
-nothing.
+Consumers stage and verify compatible files before adoption. Replacement semantics depend on the installed version: Lithuanian 1.2.1 uses per-file replacement; its review candidate switches one generation pointer. Offline clients use their previously available data within documented coverage. Neither a network failure nor an unreviewed notice extends that coverage.
 
 ## Maintaining it
 
@@ -64,10 +52,9 @@ nothing.
 python -m ingest verify                       # both packages
 python -m ingest show --package lt --year 2026
 
-python -m ingest add-holiday --package lt --date 2026-11-17 --type exchange \
-    --reason "Day of national mourning (Seimas resolution XIV-1234)"
-
-python -m ingest publish                      # rebuild manifests, verify, push
+python -m ingest add-holiday --help           # country/market scoped review tooling
+python -m ingest add-half-day --help
+python -m ingest publish --help               # maintainer release authority required
 ```
 
 `publish` refuses to push anything that does not verify. Every change records
