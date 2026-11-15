@@ -1,0 +1,20 @@
+{
+  "Nasdaq Baltic": "https://www.nasdaqbaltic.com/statistics/en/calendar?holidays=1",
+  "NSE": "https://www.nseindia.com/resources/exchange-communication-holidays",
+  "BSE": "https://www.bseindia.com/markets/MarketInfo/DispNewNoticesCirculars.aspx",
+  "MCX": "https://www.mcxindia.com/circulars/all-circulars",
+  "NSE Clearing": "https://www.nseclearing.in/clearing-settlement/capital-market/settlement-cycle",
+  "SEBI": "https://www.sebi.gov.in/sebiweb/home/HomeAction.do?doListing=yes&sid=1&ssid=7&smid=0",
+  "Nasdaq Nordic": "https://www.nasdaq.com/european-market-activity/trading-hours",
+  "Euronext": "https://www.euronext.com/en/trading/trading-hours-holidays",
+  "Xetra": "https://www.cashmarket.deutsche-boerse.com/cash-en/trading/trading-calendar-and-trading-hours",
+  "Madrid": "https://www.bolsasymercados.es/en/bme-exchange/trading/trading-calendar.html",
+  "Vienna": "https://www.wienerborse.at/en/trading/trading-information/trading-calendar/",
+  "Prague": "https://www.pse.cz/en/trading/trading-information/trading-calendar",
+  "Budapest": "https://www.bse.hu/Products-and-Services/Trading-information",
+  "Athens": "https://athens.euronext.com/sites/default/files/2025-02/Trading_Calendar_2026_GR.pdf",
+  "Seimas": "https://e-seimas.lrs.lt/portal/legalAct/lt/TAD/10c6bfd07bd511e6a0f68fd135e6f40c/asr",
+  "ECB TARGET": "https://www.ecb.europa.eu/ecb/contacts/working-hours/html/index.en.html",
+  "Warsaw GPW": "https://www.gpw.pl/rss",
+  "NSE circular RSS": "https://nsearchives.nseindia.com/content/RSS/Circulars.xml"
+}

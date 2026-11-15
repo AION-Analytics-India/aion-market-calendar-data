@@ -1,10 +1,10 @@
 {
-  "dataset_version": "2026.11.03",
+  "dataset_version": "2026.11.15",
   "files": {
-    "holidays_2026.json": "ebda55996b0d64fc8ecb72e04a1842f6f3713760b749abdc249c479179ac5e2d"
+    "holidays_2026.json": "75b9ffd2a1611d0d62baee37f6f431483087c506b173b0c018e57efe1a312784"
   },
-  "last_updated": "2026-11-03T02:04:20+00:00",
-  "next_review_date": "2027-10-01",
+  "last_updated": "2026-11-15T09:52:04+00:00",
+  "next_review_date": "2026-12-01",
   "note": "Every file must verify against its hash before any is adopted. A partial adoption is how a 105-byte delta overwrote a 117 KB taxonomy on 2026-06-26.",
   "schema_version": 1,
   "source": "https://github.com/AION-Analytics-India/aion-market-calendar-data",

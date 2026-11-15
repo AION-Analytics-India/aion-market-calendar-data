@@ -38,11 +38,7 @@ jobs:
                   actual = hashlib.sha256(body).hexdigest()
                   status = "ok" if actual == expected else "HASH MISMATCH"
                   print(f"{pkg}/{name}: {status}")
-                  # A mismatch here is usually GitHub raw's CDN serving a stale
-                  # manifest beside a fresh payload for a few minutes after a
-                  # push, which clients handle by refusing and retrying. It is
-                  # reported rather than failed, because failing the build on a
-                  # cache window would cry wolf every publish.
+                  if actual != expected: failed = True  # Unverified CDN bytes cannot close this check.
           sys.exit(1 if failed else 0)
           PY
 

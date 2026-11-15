@@ -1,6 +1,6 @@
 {
   "timezone": "Asia/Kolkata",
-  "version": "v11_20261103_muhurat_timings",
+  "version": "2026.11.14",
   "range": {
     "start": "2026-01-01",
     "end": "2026-12-25",
@@ -24,7 +24,7 @@
       "metadata": {
         "exchange": "MCX",
         "segment": "MCX",
-        "source": "https://www.mcxindia.com/market-operations/trading-survelliance/trading-holidays",
+        "source": "https://www.mcxindia.com/market-operations/trading-surveillance/trading-holidays",
         "holiday_name": "New Year Day",
         "morning_session": "open",
         "evening_session": "closed",
@@ -245,7 +245,7 @@
       "metadata": {
         "exchange": "MCX",
         "segment": "MCX",
-        "source": "https://www.mcxindia.com/market-operations/trading-survelliance/trading-holidays",
+        "source": "https://www.mcxindia.com/market-operations/trading-surveillance/trading-holidays",
         "holiday_name": "Republic Day"
       }
     },
@@ -540,7 +540,7 @@
       "metadata": {
         "exchange": "MCX",
         "segment": "MCX",
-        "source": "https://www.mcxindia.com/market-operations/trading-survelliance/trading-holidays",
+        "source": "https://www.mcxindia.com/market-operations/trading-surveillance/trading-holidays",
         "holiday_name": "Holi (2nd Day)",
         "session_status": "evening_only"
       },
@@ -811,7 +811,7 @@
       "metadata": {
         "exchange": "MCX",
         "segment": "MCX",
-        "source": "https://www.mcxindia.com/market-operations/trading-survelliance/trading-holidays",
+        "source": "https://www.mcxindia.com/market-operations/trading-surveillance/trading-holidays",
         "holiday_name": "Shri Ram Navmi",
         "session_status": "evening_only"
       },
@@ -990,7 +990,7 @@
       "metadata": {
         "exchange": "MCX",
         "segment": "MCX",
-        "source": "https://www.mcxindia.com/market-operations/trading-survelliance/trading-holidays",
+        "source": "https://www.mcxindia.com/market-operations/trading-surveillance/trading-holidays",
         "holiday_name": "Shri Mahavir Jayanti",
         "session_status": "evening_only"
       },
@@ -1229,7 +1229,7 @@
       "metadata": {
         "exchange": "MCX",
         "segment": "MCX",
-        "source": "https://www.mcxindia.com/market-operations/trading-survelliance/trading-holidays",
+        "source": "https://www.mcxindia.com/market-operations/trading-surveillance/trading-holidays",
         "holiday_name": "Good Friday"
       }
     },
@@ -1411,7 +1411,7 @@
       "metadata": {
         "exchange": "MCX",
         "segment": "MCX",
-        "source": "https://www.mcxindia.com/market-operations/trading-survelliance/trading-holidays",
+        "source": "https://www.mcxindia.com/market-operations/trading-surveillance/trading-holidays",
         "holiday_name": "Dr. Baba Saheb Ambedkar Jayanti",
         "session_status": "evening_only"
       },
@@ -1590,7 +1590,7 @@
       "metadata": {
         "exchange": "MCX",
         "segment": "MCX",
-        "source": "https://www.mcxindia.com/market-operations/trading-survelliance/trading-holidays",
+        "source": "https://www.mcxindia.com/market-operations/trading-surveillance/trading-holidays",
         "holiday_name": "Maharashtra Day",
         "session_status": "evening_only"
       },
@@ -1798,7 +1798,7 @@
       "metadata": {
         "exchange": "MCX",
         "segment": "MCX",
-        "source": "https://www.mcxindia.com/market-operations/trading-survelliance/trading-holidays",
+        "source": "https://www.mcxindia.com/market-operations/trading-surveillance/trading-holidays",
         "holiday_name": "Bakri Id",
         "session_status": "evening_only"
       },
@@ -2035,7 +2035,7 @@
       "metadata": {
         "exchange": "MCX",
         "segment": "MCX",
-        "source": "https://www.mcxindia.com/market-operations/trading-survelliance/trading-holidays",
+        "source": "https://www.mcxindia.com/market-operations/trading-surveillance/trading-holidays",
         "holiday_name": "Moharram",
         "session_status": "evening_only"
       },
@@ -2335,7 +2335,7 @@
       "metadata": {
         "exchange": "MCX",
         "segment": "MCX",
-        "source": "https://www.mcxindia.com/market-operations/trading-survelliance/trading-holidays",
+        "source": "https://www.mcxindia.com/market-operations/trading-surveillance/trading-holidays",
         "holiday_name": "Ganesh Chaturthi",
         "session_status": "evening_only"
       },
@@ -2540,7 +2540,7 @@
       "metadata": {
         "exchange": "MCX",
         "segment": "MCX",
-        "source": "https://www.mcxindia.com/market-operations/trading-survelliance/trading-holidays",
+        "source": "https://www.mcxindia.com/market-operations/trading-surveillance/trading-holidays",
         "holiday_name": "Mahatma Gandhi Jayanti"
       }
     },
@@ -2722,7 +2722,7 @@
       "metadata": {
         "exchange": "MCX",
         "segment": "MCX",
-        "source": "https://www.mcxindia.com/market-operations/trading-survelliance/trading-holidays",
+        "source": "https://www.mcxindia.com/market-operations/trading-surveillance/trading-holidays",
         "holiday_name": "Dassera",
         "session_status": "evening_only"
       },
@@ -3017,7 +3017,19 @@
         "source": "NSE circular NSE/CMTR/76941 (2026-10-19): continuous trading from 14:20, normal market close 15:30 for non-CAS securities, 15:15 for CAS securities.",
         "exchange": "NSE",
         "segment": "NSE_EQUITY",
-        "status": "confirmed"
+        "status": "confirmed",
+        "phase_windows": [
+          {
+            "phase": "PRE_OPEN",
+            "open": "14:05:00",
+            "close": "14:20:00"
+          },
+          {
+            "phase": "POST_CLOSE",
+            "open": "15:50:00",
+            "close": "16:00:00"
+          }
+        ]
       }
     },
     {
@@ -3040,7 +3052,7 @@
       "metadata": {
         "exchange": "MCX",
         "segment": "MCX",
-        "source": "https://www.mcxindia.com/market-operations/trading-survelliance/trading-holidays",
+        "source": "https://www.mcxindia.com/market-operations/trading-surveillance/trading-holidays",
         "holiday_name": "Diwali-Balipratipada",
         "session_status": "evening_only"
       },
@@ -3219,7 +3231,7 @@
       "metadata": {
         "exchange": "MCX",
         "segment": "MCX",
-        "source": "https://www.mcxindia.com/market-operations/trading-survelliance/trading-holidays",
+        "source": "https://www.mcxindia.com/market-operations/trading-surveillance/trading-holidays",
         "holiday_name": "Guru Nanak Jayanti",
         "session_status": "evening_only"
       },
@@ -3453,7 +3465,7 @@
       "metadata": {
         "exchange": "MCX",
         "segment": "MCX",
-        "source": "https://www.mcxindia.com/market-operations/trading-survelliance/trading-holidays",
+        "source": "https://www.mcxindia.com/market-operations/trading-surveillance/trading-holidays",
         "holiday_name": "Christmas"
       }
     },
@@ -3585,6 +3597,97 @@
         "source": "https://www.nseindia.com/resources/exchange-communication-holidays",
         "holiday_name": "Christmas"
       }
+    },
+    {
+      "id": "NSE_CAS_MUHURAT_20261108",
+      "name": "NSE CAS-eligible cash Muhurat session",
+      "category": "SPECIAL_TRADING_SESSION",
+      "impact": "LOW",
+      "applies_to": [
+        "NSE_EQUITY_FNO_UNDERLYING"
+      ],
+      "start": "2026-11-08T14:20:00+05:30",
+      "end": "2026-11-08T15:35:00+05:30",
+      "session_override": [
+        {
+          "market": "NSE_EQUITY_FNO_UNDERLYING",
+          "open": "14:20:00",
+          "close": "15:15:00",
+          "kind": "continuous"
+        },
+        {
+          "market": "NSE_EQUITY_FNO_UNDERLYING",
+          "open": "15:15:00",
+          "close": "15:35:00",
+          "kind": "closing_auction"
+        }
+      ],
+      "tags": [
+        "muhurat",
+        "diwali",
+        "special-session"
+      ],
+      "description": "Muhurat Trading, the ceremonial Diwali session. Held on a Sunday in 2026, so the day is a trading day despite being a weekend.",
+      "metadata": {
+        "timings_pending_exchange_circular": false,
+        "timings_provisional": false,
+        "source": "NSE circular NSE/CMTR/76941 (2026-10-19): continuous trading from 14:20, normal market close 15:30 for non-CAS securities, 15:15 for CAS securities.",
+        "exchange": "NSE",
+        "segment": "NSE_EQUITY_FNO_UNDERLYING",
+        "status": "confirmed",
+        "phase_windows": [
+          {
+            "phase": "PRE_OPEN",
+            "open": "14:05:00",
+            "close": "14:20:00"
+          },
+          {
+            "phase": "POST_CLOSE",
+            "open": "15:50:00",
+            "close": "16:00:00"
+          }
+        ]
+      }
+    },
+    {
+      "id": "NSE_FO_MUHURAT_20261108",
+      "name": "NSE F&O Muhurat session",
+      "category": "SPECIAL_TRADING_SESSION",
+      "impact": "LOW",
+      "applies_to": [
+        "NSE_EQUITY_DERIVATIVES"
+      ],
+      "start": "2026-11-08T14:20:00+05:30",
+      "end": "2026-11-08T15:40:00+05:30",
+      "session_override": [
+        {
+          "market": "NSE_EQUITY_DERIVATIVES",
+          "open": "14:20:00",
+          "close": "15:40:00",
+          "kind": "continuous"
+        }
+      ],
+      "tags": [
+        "muhurat",
+        "diwali",
+        "special-session"
+      ],
+      "description": "Muhurat Trading, the ceremonial Diwali session. Held on a Sunday in 2026, so the day is a trading day despite being a weekend.",
+      "metadata": {
+        "timings_pending_exchange_circular": false,
+        "timings_provisional": false,
+        "source": "NSE/FAOP/76940 dated 2026-10-19: pre-open 14:05-14:20; continuous 14:20-15:40.",
+        "exchange": "NSE",
+        "segment": "NSE_EQUITY_DERIVATIVES",
+        "status": "confirmed",
+        "phase_windows": [
+          {
+            "phase": "PRE_OPEN",
+            "open": "14:05:00",
+            "close": "14:20:00"
+          }
+        ]
+      }
     }
   ],
   "market_sessions": {
@@ -3710,7 +3813,7 @@
         "close": "15:30:00",
         "until": "2026-08-02"
       },
-      "note": "The equity derivatives segment operates up to 15:40 (para 4.2.3) — 10 minutes after the CAS order entry period closes. Index derivatives have no auction and trade continuously to 15:40. Dynamic price-band flexing for stock futures does not apply 15:15-15:40 (para 4.4.2).",
+      "note": "The equity derivatives segment operates up to 15:40 (para 4.2.3) \u2014 10 minutes after the CAS order entry period closes. Index derivatives have no auction and trade continuously to 15:40. Dynamic price-band flexing for stock futures does not apply 15:15-15:40 (para 4.4.2).",
       "source": "SEBI HO/47/11/11(3)2025-MRD-POD2/I/2765/2026 dated 2026-01-16",
       "revised_from_2026_12_07": {
         "effective_from": "2026-12-07",
@@ -4116,7 +4219,7 @@
         "close": "15:30:00",
         "until": "2026-08-02"
       },
-      "note": "The equity derivatives segment operates up to 15:40 (para 4.2.3) — 10 minutes after the CAS order entry period closes. Index derivatives have no auction and trade continuously to 15:40. Dynamic price-band flexing for stock futures does not apply 15:15-15:40 (para 4.4.2).",
+      "note": "The equity derivatives segment operates up to 15:40 (para 4.2.3) \u2014 10 minutes after the CAS order entry period closes. Index derivatives have no auction and trade continuously to 15:40. Dynamic price-band flexing for stock futures does not apply 15:15-15:40 (para 4.4.2).",
       "source": "SEBI HO/47/11/11(3)2025-MRD-POD2/I/2765/2026 dated 2026-01-16",
       "revised_from_2026_12_07": {
         "effective_from": "2026-12-07",
@@ -4343,5 +4446,11 @@
         "source": "MCX/TRD/550/2026 dated 2026-09-29, effective 2026-11-02 to 2027-03-12"
       }
     ]
-  }
+  },
+  "changes": [
+    {
+      "at": "2026-11-14",
+      "change": "Candidate only: represent NSE CMTR/76941 cash phases and FAOP/76940 F&O special session. Coverage remains 2026 only."
+    }
+  ]
 }

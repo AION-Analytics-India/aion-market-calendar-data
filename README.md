@@ -101,3 +101,8 @@ network access entirely.
 ---
 
 MIT licensed. [AION Analytics (India)](https://github.com/AION-Analytics-India).
+
+## Review branch: daily discovery and release gates
+
+The deployed baseline has monthly and data-push self-checks. The proposed daily 02:17 UTC workflow and calendar-notice-received dispatch collect source evidence only. A successful page fetch is not approval. The Baltic adapter compares dated market rows; other source-page fingerprints require a human to locate and classify the notice. Missing publication times stay null. Dated changes are reviewed by venue, market and source before publishing. Use python -m ingest.discover PATH/receipts.json for a local checkpoint and python -m ingest verify for data verification. Install jsonschema>=4.18,<5 in the maintainer environment for publish --no-push schema validation. Do not run publish without separate release approval.
+

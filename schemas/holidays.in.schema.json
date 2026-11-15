@@ -35,6 +35,6 @@
     },
     "market_sessions": { "type": "object" },
     "market_timings": { "type": "object" },
-    "sources": { "type": "array" }
+    "sources": { "description": "Named provenance records in published 2026 data; earlier list-form manifests remain readable.", "oneOf": [{"type": "object", "additionalProperties": {"type": "string"}}, {"type": "array", "items": {"type": "string"}}] }
   }
 }

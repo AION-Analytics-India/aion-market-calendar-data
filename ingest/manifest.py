@@ -49,7 +49,7 @@ def build(directory: Path, dataset_version: str | None = None) -> dict[str, Any]
         "last_updated": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         # Exchanges publish next year's calendar in the autumn; this lands before
         # then so the reminder arrives while the data still has time to be wrong.
-        "next_review_date": date(today.year + (0 if today.month < 10 else 1), 10, 1).isoformat(),
+        "next_review_date": min(date(today.year + (0 if today.month < 10 else 1), 10, 1), date(max(_years(directory)), 12, 1)).isoformat(),
         "years": _years(directory),
         "files": {p.name: sha256(p) for p in files},
         "source": REPO,

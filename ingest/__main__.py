@@ -133,19 +133,18 @@ def cmd_add_holiday(args) -> int:
     day = date.fromisoformat(args.date)
     payload = _load(args.package, day.year)
     key = "exchange_holidays" if args.type == "exchange" else "public_holidays"
-    payload[key] = sorted(set(payload.get(key) or []) | {args.date})
-    if args.type == "exchange":
-        for mic, dates in (payload.get("exchange_holidays_by_venue") or {}).items():
-            if not args.venue or args.venue.upper() == mic:
-                payload["exchange_holidays_by_venue"][mic] = sorted(set(dates) | {args.date})
-    # A full closure cannot also be a half-day; leaving both makes the file
-    # self-contradictory and the session logic would honour the closure while the
-    # half-day sat there looking authoritative.
-    if args.date in (payload.get("half_days") or {}):
-        del payload["half_days"][args.date]
-        print(f"  removed {args.date} from half_days: a closure cannot also be a half-day")
-    for table in (payload.get("half_days_by_venue") or {}).values():
-        table.pop(args.date, None)
+    tables=payload.get("exchange_holidays_by_venue") or {}
+    if args.type != "exchange":
+        if args.venue: raise SystemExit("Statutory dates do not take an exchange venue")
+        payload[key]=sorted(set(payload.get(key,[]))|{args.date})
+    else:
+        venue=args.venue.upper() if args.venue else None
+        if venue and venue not in tables: raise SystemExit("Unknown venue; no edits made")
+        for mic in ([venue] if venue else tables):
+            tables[mic]=sorted(set(tables[mic])|{args.date})
+            (payload.get("half_days_by_venue",{}).get(mic) or {}).pop(args.date,None)
+        payload[key]=sorted(set.intersection(*(set(v) for v in tables.values()))) if tables else sorted(set(payload.get(key,[]))|{args.date})
+        if args.date in payload[key]: payload.get("half_days",{}).pop(args.date,None)
     _record(payload, f"added {args.date} to {key}: {args.reason}")
     _save(args.package, day.year, payload)
     print(f"  {args.package}/{day.year}: {args.date} added to {key}")
@@ -161,10 +160,14 @@ def cmd_add_half_day(args) -> int:
     if args.date in set(payload.get("exchange_holidays") or []):
         sys.exit(f"  {args.date} is already a full closure; remove it from "
                  f"exchange_holidays before making it a half-day")
-    payload.setdefault("half_days", {})[args.date] = args.close
-    for mic, table in (payload.get("half_days_by_venue") or {}).items():
-        if not args.venue or args.venue.upper() == mic:
-            table[args.date] = args.close
+    tables=payload.get("half_days_by_venue") or {}
+    venue=args.venue.upper() if args.venue else None
+    if venue and venue not in tables: raise SystemExit("Unknown venue; no edits made")
+    markets=[venue] if venue else list(tables)
+    if any(args.date in payload.get("exchange_holidays_by_venue",{}).get(mic,[]) for mic in markets):
+        raise SystemExit("Venue is closed; refusing a simultaneous half-day")
+    if not venue: payload.setdefault("half_days",{})[args.date]=args.close
+    for mic in markets: tables[mic][args.date]=args.close
     _record(payload, f"half-day {args.date} closing {args.close}: {args.reason}")
     _save(args.package, day.year, payload)
     print(f"  {args.package}/{day.year}: {args.date} closes {args.close}")
@@ -181,16 +184,22 @@ def cmd_publish(args) -> int:
     rc = cmd_verify(argparse.Namespace(package=args.package))
     if rc != 0:
         sys.exit("  verification failed; nothing pushed")
+    from .schema_gate import validate_generation
+    for package in (args.package,) if args.package else PACKAGES:
+        validate_generation(REPO,package)
     if args.no_push:
         print("\n  --no-push: manifests rebuilt, nothing committed")
         return 0
     try:
-        subprocess.run(["git", "add", "-A"], cwd=REPO, check=True)
+        if subprocess.run(["git","diff","--cached","--quiet"],cwd=REPO).returncode:
+            raise SystemExit("Pre-existing staged changes; use an isolated publication checkout")
+        owned=[args.package] if args.package else sorted(PACKAGES)
+        subprocess.run(["git","add","--",*owned],cwd=REPO,check=True)
         subprocess.run(["git", "commit", "-m",
                         f"data: {datetime.now(timezone.utc):%Y-%m-%d} update"],
                        cwd=REPO, check=True)
         subprocess.run(["git", "push"], cwd=REPO, check=True)
-        print("\n  pushed. Clients pick this up within 24 hours; no release needed.")
+        print("\n  pushed. Eligible online clients can adopt a compatible verified generation.")
     except subprocess.CalledProcessError as exc:
         print(f"\n  git step failed ({exc}); the manifests are rebuilt locally.")
         return 1
