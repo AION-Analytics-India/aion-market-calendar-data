@@ -6,7 +6,7 @@ name: manifest self-check
 on:
   schedule: [{ cron: "0 6 1 * *" }]
   push:
-    paths: ["in/**", "lt/**"]
+    paths: ["in/**", "lt/**", "ingest/**", "schemas/**", "tests/**", ".github/workflows/selfcheck.yml"]
   workflow_dispatch:
 
 jobs:
@@ -18,7 +18,11 @@ jobs:
         with: { python-version: "3.13" }
 
       - name: Manifests match their files, and the data is self-consistent
-        run: python -m ingest verify
+        run: |
+          python -m pip install 'jsonschema[format]>=4.23,<5'
+          python -c "from pathlib import Path; from ingest.schema_gate import validate_generation; [validate_generation(Path.cwd(), k) for k in ('in','lt')]"
+          python -m unittest discover -s tests -v
+          python -m ingest verify
 
       - name: The published manifests are fetchable and intact
         run: |

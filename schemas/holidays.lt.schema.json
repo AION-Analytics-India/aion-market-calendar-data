@@ -15,7 +15,7 @@
     "exchange_holidays": { "type": "array", "items": { "type": "string", "format": "date" } },
     "exchange_holidays_by_venue": {
       "type": "object",
-      "description": "AUTHORITATIVE where present. A date added only to the global list has no effect for a venue that has its own -- the easiest mistake to make here, and what `ingest verify` checks for.",
+      "description": "AUTHORITATIVE where present. A date added only to the global list has no effect for a venue that has its own -- an explicit MIC overrides the global fallback. The publisher verifies effective full-day and half-day maps and reviewed Baltic dates.",
       "additionalProperties": { "type": "array", "items": { "type": "string", "format": "date" } }
     },
     "half_days": {

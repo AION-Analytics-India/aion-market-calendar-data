@@ -31,6 +31,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO))
 
+from ingest.venue_validation import validate, unique_keys
 from ingest.manifest import verify as verify_dir, write as write_manifest  # noqa: E402
 
 PACKAGES = {"lt": "Lithuanian (Nasdaq Baltic)", "in": "Indian (NSE/BSE/MCX)"}
@@ -66,29 +67,8 @@ def _record(payload: dict, entry: str) -> None:
 
 def _consistency(package: str, payload: dict) -> list[str]:
     """Contradictions a hash cannot catch. Each of these has actually happened."""
-    problems: list[str] = []
-    if package != "lt":
-        return problems            # the Indian payload has its own shape
-    year = payload.get("year")
-    global_ex = set(payload.get("exchange_holidays") or [])
-    by_venue = payload.get("exchange_holidays_by_venue") or {}
-    for mic, dates in by_venue.items():
-        missing = global_ex - set(dates)
-        if missing:
-            problems.append(f"{mic} is missing {sorted(missing)} which are in the global "
-                            f"list; the per-venue list wins, so they do nothing for {mic}")
-    for day in (payload.get("half_days") or {}):
-        if day in global_ex:
-            problems.append(f"{day} is both a full closure and a half-day")
-    for mic, table in (payload.get("half_days_by_venue") or {}).items():
-        for day in table:
-            if day in set(by_venue.get(mic, global_ex)):
-                problems.append(f"{day} is both a closure and a half-day for {mic}")
-    for field in ("public_holidays", "exchange_holidays"):
-        for day in (payload.get(field) or []):
-            if not str(day).startswith(str(year)):
-                problems.append(f"{day} in {field} is not in year {year}")
-    return problems
+    return validate(payload) if package == "lt" else []
+
 
 
 def cmd_verify(args) -> int:
@@ -98,7 +78,12 @@ def cmd_verify(args) -> int:
         print(f"  {package}/: manifest {'ok' if ok else 'FAILED - ' + why}")
         failed |= not ok
         for path in sorted(_dir(package).glob("holidays_*.json")):
-            problems = _consistency(package, json.loads(path.read_text(encoding="utf-8")))
+            try:
+                payload = json.loads(path.read_bytes(), object_pairs_hook=unique_keys)
+                problems = (validate(payload, int(path.stem.split("_")[-1])) if package == "lt"
+                            else _consistency(package, payload))
+            except (ValueError, TypeError) as exc:
+                problems = [str(exc)]
             for problem in problems:
                 print(f"    {path.name}: {problem}")
             failed |= bool(problems)
